@@ -1,0 +1,44 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_editortest/local/examples/stateready
+
+    State ready component example.
+}}
+<div class="card m-3" id="{{uniqid}}-example-bidirectionalsubcomponent">
+  <div class="card-body">
+    <h5 class="card-title">Bidirectional subcomponents</h5>
+    <p class="card-text">
+      In this case, the subcomponents is rendered using JS. The initial input value
+      is taken from the initial state and it is passed to the renamer component as
+      context data. The parent component won't have access to the subcomponent
+      instance unless the subcomponent triggers an event.
+    </p>
+    <p class="card-text">Value: <span data-for="content">Waiting for the initial state...</span></p>
+    <p class="card-text">
+        <button type="button" class="btn btn-primary" data-for="reset">Reset value</button>
+    </p>
+    <p class="card-text" data-for="renamer">
+      Loading component...
+    </p>
+  </div>
+</div>
+{{#js}}
+require(['format_editortest/local/examples/bidirectionalsubcomponent'], function(component) {
+    component.init('{{uniqid}}-example-bidirectionalsubcomponent');
+});
+{{/js}}

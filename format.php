@@ -23,10 +23,17 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use format_editortest\output\examples;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/filelib.php');
 require_once($CFG->libdir.'/completionlib.php');
+
+// User can choose between see the JS tests or the component examples.
+$display = optional_param('show', 'tests', PARAM_ALPHA);
+
+// TODO: add some minimal activities to the section zero.
 
 // Retrieve course format option fields and add them to the $course object.
 $format = course_get_format($course);
@@ -43,12 +50,15 @@ course_create_sections_if_missing($course, 0);
 
 $renderer = $PAGE->get_renderer('format_editortest');
 
-if (!empty($displaysection)) {
-    $format->set_section_number($displaysection);
+if ($display === 'examples') {
+    // Show the components examples instead of the tests.
+    $widget = new examples($format);
+    echo $renderer->render($widget);
+} else {
+    if (!empty($displaysection)) {
+        $format->set_section_number($displaysection);
+    }
+    $outputclass = $format->get_output_classname('course_format');
+    $widget = new $outputclass($format);
+    echo $renderer->render($widget);
 }
-$outputclass = $format->get_output_classname('course_format');
-$widget = new $outputclass($format);
-echo $renderer->render($widget);
-
-// Include course format js module.
-$PAGE->requires->js('/course/format/topics/format.js');

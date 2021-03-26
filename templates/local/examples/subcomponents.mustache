@@ -1,0 +1,46 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_editortest/local/examples/stateready
+
+    State ready component example.
+}}
+<div class="card m-3" id="{{uniqid}}-example-subcomponents">
+  <div class="card-body">
+    <h5 class="card-title">Delegating logic to subcomponents</h5>
+    <p class="card-text">
+       This chunk of HTML is controlled by 1 main component and 2 subcomponents.
+       Both manipulating the same HTML and using the same state data.
+    </p>
+    <p class="card-text">
+        <button type="button" class="btn btn-primary" data-for="bold">Toggle bold</button>
+        This button is controlled by "bold.js".
+    </p>
+    <p class="card-text">
+        <button type="button" class="btn btn-primary" data-for="color">Rosate color</button>
+        This button is controlled by "color.js".
+    </p>
+    <p class="card-text" data-for="content">
+      This is just a text sample. Both "bold.js" and "color.js" edit this HTML.
+    </p>
+  </div>
+</div>
+{{#js}}
+require(['format_editortest/local/examples/subcomponents'], function(component) {
+    component.init('{{uniqid}}-example-subcomponents');
+});
+{{/js}}

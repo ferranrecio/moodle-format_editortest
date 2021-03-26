@@ -22,16 +22,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_editortest\output\course_format;
+namespace format_editortest\output;
 
-use core_course\course_format;
-use core_course\output\course_format\state as statebase;
+use core_course\output\course_format as course_format_base;
 use renderable;
 use stdClass;
 
-class state extends statebase {
+class course_format extends course_format_base {
 
-    /** @var course_format the course format class */
     protected $format;
 
     /**
@@ -44,30 +42,10 @@ class state extends statebase {
 
         $data = parent::export_for_template($output);
 
-        $data->textvalue = 'Plugin value';
-        // Variable used in some components.
-        $data->sampletext = 'This is a state value.';
-        // Variables used for the watcher example.
-        $data->samplebool = false;
-        // Variable used for lazy load examples.
-        $data->lazytext = 'This is a lazy text from the state';
-        // Variables for subcomponents examples.
-        $data->samplestring1 = '';
-        $data->samplestring2 = 'Some initial value';
-        $data->samplestring3 = 'Another initial value';
-        // Variables for the subcomponents example.
-        $data->myformat = (object)[
-            'bold' => false,
-            'color' => 0,
-            'colors' => [
-                '#000000',
-                '#FF0000',
-                '#00FF00',
-                '#0000FF',
-                '#00FFFF',
-                '#FFFF00',
-            ],
-        ];
+        $format = $this->format;
+        $course = $format->get_course();
+
+        $data->courseid = $course->id;
 
         return $data;
     }

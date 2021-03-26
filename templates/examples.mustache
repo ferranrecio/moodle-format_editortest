@@ -1,0 +1,54 @@
+{{> format_editortest/tabs}}
+<h2>Basic examples</h2>
+<p>The following examples are using those three basic concepts: stateReady,
+watcher and mutations.</p>
+
+{{> format_editortest/local/examples/stateready}}
+{{> format_editortest/local/examples/watcher}}
+{{> format_editortest/local/examples/mutations}}
+
+<h2>Lazy loading using components</h2>
+<p>Components are ideal for lazy loading because they have a stateReady methods that
+can be used to load extra content to the page. There are two scenarios:</p>
+<ol>
+    <li>Static content: we simply use the Template AMD module to add extra HTML to
+    our component.</li>
+    <li>Loading a subcomponent: components can render other components as part of
+    it's content.</li>
+</ol>
+{{> format_editortest/local/examples/lazyhtml}}
+{{> format_editortest/local/examples/lazycomponent}}
+
+<h2>Communication between components</h2>
+<p>Component can interact with other components.
+This is done via JS events but there are three ways to interact with
+components:</p>
+<ol>
+    <li>Direct mustache inclusion: any mustache can include a reactive component and
+    this will trigger custom events when needed. This is the easiest
+    way to include subcomponents if all subcomponents know how to interact with
+    the reactive state, but it is hard for parent components to access the subcomponent
+    instance.</li>
+    <li>JS mustache rendering (uni-directional): if your subcomponents depends on some data from the
+    parent component, the easiest way is to render the mustache file via the "renderComponent" method
+    and pass any information as a context data.</li>
+    <li>Bidirectional component communication: the mustache way of including javascript makes complex
+    to access the specific component instance from the parent component. However, the same
+    "renderComponent" used for uni-directional communication can do most of the hard work for you.</li>
+</ol>
+<p>The following examples use component communication:</p>
+
+{{> format_editortest/local/examples/directsubcomponent}}
+{{> format_editortest/local/examples/unidirectionalsubcomponent}}
+{{> format_editortest/local/examples/bidirectionalsubcomponent}}
+
+<h2>Delegating logic to subcomponents</h2>
+<p>All previous examples have a specific HTML templates for each component.
+However, for big components (like the course contents) that is not the best option.
+As the code grow, having all the logic in a single AMD module can end up with unmantainable
+code.</p>
+<p>To avoid having too code in a component, parts of the logic can be easily delegated
+to subcomponents, which will interact with the same HTML and reactive module as the
+parent.</p>
+
+{{> format_editortest/local/examples/subcomponents}}

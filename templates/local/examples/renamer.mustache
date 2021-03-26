@@ -1,0 +1,34 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_editortest/local/examples/stateready
+
+    State ready component example.
+}}
+<div class="input-group mb-3" id="{{uniqid}}-example-renamer">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="{{uniqid}}-field">Value</span>
+  </div>
+  <input type="text" class="form-control" placeholder="New value"
+        aria-label="New value" aria-describedby="{{uniqid}}-field"
+        value="{{inputvalue}}">
+</div>
+{{#js}}
+require(['format_editortest/local/examples/renamer'], function(component) {
+    component.init('{{uniqid}}-example-renamer');
+});
+{{/js}}

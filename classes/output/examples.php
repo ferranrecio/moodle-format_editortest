@@ -15,24 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Contains the ajax update course structure.
+ * Editor component examples output class.
  *
  * @package   core_course
  * @copyright 2021 Ferran Recio <ferran@moodle.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_editortest\output\course_format;
+namespace format_editortest\output;
 
 use core_course\course_format;
-use core_course\output\course_format\state as statebase;
 use renderable;
+use templatable;
 use stdClass;
 
-class state extends statebase {
+class examples implements renderable, templatable {
 
     /** @var course_format the course format class */
     protected $format;
+
+    /**
+     * Constructor.
+     *
+     * @param course_format $format the course format
+     */
+    public function __construct(course_format $format) {
+        $this->format = $format;
+    }
 
     /**
      * Export this data so it can be used as state object in the course editor.
@@ -41,34 +50,19 @@ class state extends statebase {
      * @return stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output): stdClass {
+        global $PAGE;
 
-        $data = parent::export_for_template($output);
+        $PAGE->requires->js_call_amd('format_editortest/mutations', 'init');
 
-        $data->textvalue = 'Plugin value';
-        // Variable used in some components.
-        $data->sampletext = 'This is a state value.';
-        // Variables used for the watcher example.
-        $data->samplebool = false;
-        // Variable used for lazy load examples.
-        $data->lazytext = 'This is a lazy text from the state';
-        // Variables for subcomponents examples.
-        $data->samplestring1 = '';
-        $data->samplestring2 = 'Some initial value';
-        $data->samplestring3 = 'Another initial value';
-        // Variables for the subcomponents example.
-        $data->myformat = (object)[
-            'bold' => false,
-            'color' => 0,
-            'colors' => [
-                '#000000',
-                '#FF0000',
-                '#00FF00',
-                '#0000FF',
-                '#00FFFF',
-                '#FFFF00',
-            ],
+        $format = $this->format;
+        $course = $format->get_course();
+
+        // Most of the editor components will get the data from the state.
+        // Probably most components won't require an output component at all.
+        return (object)[
+            'coursename' => $course->fullname,
+            'courseid' => $course->id,
+            'isexamples' => true,
         ];
-
-        return $data;
     }
 }

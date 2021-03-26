@@ -1,0 +1,40 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_editortest/local/examples/stateready
+
+    State ready component example.
+}}
+<div class="card m-3" id="{{uniqid}}-example-directsubcomponent">
+  <div class="card-body">
+    <h5 class="card-title">Backend rendered subcomponent</h5>
+    <p class="card-text">
+       In this case, our mustache file include a subcomponent and we only control the initial
+       data we send it. There is no way the parent component interacts with the subcomponent
+       apart from listenning to the cusotm events.
+    </p>
+    <p class="card-text" data-for="content">Please, write something in the input</p>
+    <p class="card-text">
+        {{> format_editortest/local/examples/renamer}}
+    </p>
+  </div>
+</div>
+{{#js}}
+require(['format_editortest/local/examples/directsubcomponent'], function(component) {
+    component.init('{{uniqid}}-example-directsubcomponent');
+});
+{{/js}}
