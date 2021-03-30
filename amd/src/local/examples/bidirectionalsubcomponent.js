@@ -75,7 +75,7 @@ export default class Component extends BaseComponent {
 
         // Bind reset button.
         const button = this.getElement(this.selectors.RESET);
-        button.addEventListener('click', this._clickReset.bind(this));
+        this.addEventListener(button, 'click', this._clickReset);
 
         try {
             const target = this.getElement(this.selectors.RENAMER);
@@ -90,9 +90,13 @@ export default class Component extends BaseComponent {
         // For bidirectional relations, we can use the getEvents directly form the instance,
         // instead of using the static method from the abstract class.
         const events = this.renamer.getEvents();
-        this.element.addEventListener(events.renamed, ({detail}) => {
-            this._changeValue(detail.component.getValue());
-        });
+        this.addEventListener(
+            this.element,
+            events.renamed,
+            ({detail}) => {
+                this._changeValue(detail.component.getValue());
+            }
+        );
     }
 
     getWatchers() {

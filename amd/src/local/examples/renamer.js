@@ -92,7 +92,7 @@ export default class Component extends BaseComponent {
             );
         }, 250);
 
-        input.addEventListener('keyup', debounceddispatch);
+        this.addEventListener(input, 'keyup', debounceddispatch);
     }
 
     /**

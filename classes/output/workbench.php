@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Contains the ajax update course structure.
+ * Editor component workbench output class.
  *
  * @package   core_course
  * @copyright 2021 Ferran Recio <ferran@moodle.com>
@@ -24,13 +24,24 @@
 
 namespace format_editortest\output;
 
-use core_course\output\course_format as course_format_base;
+use core_course\course_format;
 use renderable;
+use templatable;
 use stdClass;
 
-class course_format extends course_format_base {
+class workbench implements renderable, templatable {
 
+    /** @var course_format the course format class */
     protected $format;
+
+    /**
+     * Constructor.
+     *
+     * @param course_format $format the course format
+     */
+    public function __construct(course_format $format) {
+        $this->format = $format;
+    }
 
     /**
      * Export this data so it can be used as state object in the course editor.
@@ -39,15 +50,19 @@ class course_format extends course_format_base {
      * @return stdClass data context for a mustache template
      */
     public function export_for_template(\renderer_base $output): stdClass {
+        global $PAGE;
 
-        $data = parent::export_for_template($output);
+        $PAGE->requires->js_call_amd('format_editortest/mutations', 'init');
 
         $format = $this->format;
         $course = $format->get_course();
 
-        $data->courseid = $course->id;
-        $data->isformat = true;
-
-        return $data;
+        // Most of the editor components will get the data from the state.
+        // Probably most components won't require an output component at all.
+        return (object)[
+            'coursename' => $course->fullname,
+            'courseid' => $course->id,
+            'isworkbench' => true,
+        ];
     }
 }

@@ -69,9 +69,13 @@ export default class Component extends BaseComponent {
         // we don't have access to the component instance. However, we can know this component events
         // using the static getDefaults method.
         const events = Renamer.getEvents();
-        this.element.addEventListener(events.renamed, ({detail}) => {
-            this._changeValue(detail.component.getValue());
-        });
+        this.addEventListener(
+            this.element,
+            events.renamed,
+            ({detail}) => {
+                this._changeValue(detail.component.getValue());
+            }
+        );
     }
 
     getWatchers() {

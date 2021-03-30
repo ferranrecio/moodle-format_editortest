@@ -728,6 +728,57 @@ class Test extends TestBase {
             nohandlewatchertwice: {watchers: [{watch: () => 'no_watch'}], correct: false, twice: true},
         };
     }
+
+    /**
+     * Test unregister component.
+     */
+    testUnregisterComponent() {
+        let test1 = this.addAssert('Component is watching the state.', false);
+        let test2 = this.addAssert('Unregistered component stop watching the state.', true);
+
+        const reactive = new Reactive({
+            name: 'TestReactive',
+            eventname: this.eventname,
+            eventdispatch: this.eventdispatch,
+            state: {
+                tocheck: {value1: 'OK', value2: 'OK'},
+            },
+            mutations: {
+                alter: (statemanager, prop, newvalue) => {
+                    const state = statemanager.state;
+                    statemanager.setLocked(false);
+                    state.tocheck[prop] = newvalue;
+                    statemanager.setLocked(true);
+                },
+            },
+        });
+
+        const component = {
+            getWatchers: () => [
+                {
+                    watch: 'tocheck.value1:updated',
+                    handler: ({element}) => {
+                        this.assertEquals(test1, 'Perfect', element.value1);
+                        // Unregister and test.
+                        reactive.unregisterComponent(component);
+                        reactive.dispatch('alter', 'value2', 'Perfect');
+                    }
+                },
+                {
+                    watch: 'tocheck.value2:updated',
+                    handler: () => {
+                        this.assertTrue(test2, false);
+                    }
+                },
+            ],
+            stateReady: () => {
+                reactive.dispatch('alter', 'value1', 'Perfect');
+            }
+        };
+
+        reactive.registerComponent(component);
+
+    }
 }
 
 export default new Test();

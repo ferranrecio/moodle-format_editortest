@@ -24,6 +24,7 @@
  */
 
 use format_editortest\output\examples;
+use format_editortest\output\workbench;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -50,15 +51,21 @@ course_create_sections_if_missing($course, 0);
 
 $renderer = $PAGE->get_renderer('format_editortest');
 
-if ($display === 'examples') {
-    // Show the components examples instead of the tests.
-    $widget = new examples($format);
-    echo $renderer->render($widget);
-} else {
-    if (!empty($displaysection)) {
-        $format->set_section_number($displaysection);
-    }
-    $outputclass = $format->get_output_classname('course_format');
-    $widget = new $outputclass($format);
-    echo $renderer->render($widget);
+switch ($display) {
+    case 'examples':
+        $widget = new examples($format);
+        break;
+
+    case 'workbench':
+        $widget = new workbench($format);
+        break;
+
+    default:
+        if (!empty($displaysection)) {
+            $format->set_section_number($displaysection);
+        }
+        $outputclass = $format->get_output_classname('course_format');
+        $widget = new $outputclass($format);
 }
+
+echo $renderer->render($widget);

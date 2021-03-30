@@ -330,11 +330,7 @@ class Test extends TestBase {
             stateReady() {
                 this.test.assertTrue(test2, true);
                 // Bind some user actions.
-                this.element.addEventListener('click', () => {
-                    this.test.assertTrue(test3, true);
-                    // Trigger custom event. Typically before this it will be some mutation or extra logic.
-                    this.dispatchEvent(this.events.sampleevent, {value: 'Perfect!'});
-                });
+                this.addEventListener(this.element, 'click', this._clickevent);
                 // Now we sumilate a user click.
                 clicknow();
             }
@@ -345,6 +341,15 @@ class Test extends TestBase {
                     reactive,
                     test,
                 });
+            }
+
+            _clickevent() {
+                this.test.assertTrue(test3, true);
+                // Trigger custom event. Typically before this it will be some mutation or extra logic.
+                this.dispatchEvent(this.events.sampleevent, {value: 'Perfect!'});
+
+                // We are done with the test. We can remove the listener.
+                this.removeAllEventListeners();
             }
         }
 
@@ -413,6 +418,211 @@ class Test extends TestBase {
 
         // Check both getEvents returns the same results.
         this.assertEquals(null, JSON.stringify(Sample.getEvents()), JSON.stringify(component.getEvents()));
+    }
+
+    /**
+     * Test unregister component.
+     */
+    testUnregister() {
+        const test1 = this.addAssert('Component create hook executed', false);
+        const test2 = this.addAssert('Component destroy executed', false);
+        const test3 = this.addAssert('Component does not watch the state', true);
+
+        this.reactive.setInitialState({
+            sample: {value: 'OK'},
+        });
+
+        class Sample extends BaseComponent {
+            create(descriptor) {
+                descriptor.test.assertTrue(test1, true);
+                this.test = descriptor.test;
+            }
+
+            destroy() {
+                this.test.assertTrue(test2, true);
+            }
+
+            static init(test, reactive, element) {
+                return new Sample({
+                    element,
+                    reactive,
+                    test,
+                });
+            }
+
+            getWatchers() {
+                return [
+                    {
+                        watch: 'sample.value:updated',
+                        handler: this.sampleUpdated,
+                    },
+                ];
+            }
+
+            sampleUpdated() {
+                this.test.assertTrue(test3, false);
+            }
+        }
+
+        const component = Sample.init(this, this.reactive, this.target);
+
+        component.unregister();
+
+        this.reactive.dispatch('alter', 'sample', 'Perfect');
+    }
+
+    /**
+     * Test remove component.
+     */
+    testRemove() {
+        const test1 = this.addAssert('Component create hook executed', false);
+        const test2 = this.addAssert('Component destroy executed', false);
+        const test3 = this.addAssert('Component does not watch the state', true);
+        const test4 = this.addAssert('DOM element is removed', false);
+
+        const fakenode = document.createElement('span');
+        fakenode.dataset.tocheck = 'testRemove';
+        this.target.appendChild(fakenode);
+
+        this.reactive.setInitialState({
+            sample: {value: 'OK'},
+        });
+
+        class Sample extends BaseComponent {
+            create(descriptor) {
+                descriptor.test.assertTrue(test1, true);
+                this.test = descriptor.test;
+            }
+
+            destroy() {
+                this.test.assertTrue(test2, true);
+            }
+
+            static init(test, reactive, element) {
+                return new Sample({
+                    element,
+                    reactive,
+                    test,
+                });
+            }
+
+            getWatchers() {
+                return [
+                    {
+                        watch: 'sample.value:updated',
+                        handler: this.sampleUpdated,
+                    },
+                ];
+            }
+
+            sampleUpdated() {
+                this.test.assertTrue(test3, false);
+            }
+        }
+
+        const component = Sample.init(this, this.reactive, fakenode);
+
+        const test = this;
+
+        // Test the element is removed.
+        const observer = new MutationObserver((mutationsList) => {
+            mutationsList.forEach(change => {
+                change.removedNodes.forEach((node) => {
+                    if (node.dataset.tocheck == 'testRemove') {
+                        test.assertTrue(test4, true);
+                    }
+                });
+            });
+
+        });
+        observer.observe(this.target, {childList: true});
+
+        component.remove();
+
+        this.reactive.dispatch('alter', 'sample', 'Perfect');
+    }
+
+    /**
+     * Test removeEventListener and removeAllEventListeners method.
+     *
+     * @param {object} scenario the scenario with settings:
+     * - remove (all, one, none) indicating the event listeners to remove
+     * - triggers (true/false) indicating if the event must be captures or not
+     */
+    testRemoveEventListeners({remove, triggers}) {
+        const test1 = this.addAssert('Component create hook executed', false);
+        const test2 = this.addAssert('State ready triggered', false);
+        const test3 = this.addAssert('Click event triggered', false);
+        const test4 = this.addAssert('Custom event captured only if is registered', !triggers);
+
+        // We don't have a user so we give the component a method to simulate the used action when it is ready.
+        const clicknow = () => {
+            this.assertTrue(test3, true);
+            this.target.click();
+        };
+
+        class Sample extends BaseComponent {
+            create(descriptor) {
+                descriptor.test.assertTrue(test1, true);
+                this.test = descriptor.test;
+                // Init events list.
+                this.events = {
+                    sampleevent: 'sampleevent',
+                };
+            }
+
+            stateReady() {
+                this.test.assertTrue(test2, true);
+                // Bind some user actions.
+                this.addEventListener(this.element, 'click', this._clickevent);
+                // Remove listeners.
+                if (remove == 'all') {
+                    this.removeAllEventListeners();
+                }
+                if (remove == 'one') {
+                    this.removeEventListener(this.element, 'click', this._clickevent);
+                }
+                // Now we sumilate a user click.
+                clicknow();
+            }
+
+            static init(test, reactive, element) {
+                return new Sample({
+                    element,
+                    reactive,
+                    test,
+                });
+            }
+
+            _clickevent() {
+                this.test.assertTrue(test4, triggers);
+                // In any case, if we are here we can unregister all events.
+                this.removeAllEventListeners();
+            }
+        }
+
+        Sample.init(this, this.reactive, this.target);
+
+        // Initialize reactive state to trigger ready state.
+        this.reactive.setInitialState({
+            sample: {value: 'OK'},
+        });
+    }
+
+    /**
+     * Data provider for testRemoveEventListeners.
+     *
+     * @returns {object} the testing scenarios
+     */
+    dataProviderTestRemoveEventListeners() {
+        return {
+            // Remove all listeners.
+            all: {remove: 'all', triggers: false},
+            // Remove just one listener.
+            one: {remove: 'one', triggers: false},
+            // Don't remove any listeners.
+            none: {remove: 'none', triggers: true},
+        };
     }
 
 }

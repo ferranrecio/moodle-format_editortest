@@ -73,7 +73,7 @@ export default class Component extends watcher {
 
         // Just bind a click listener to the component button.
         const button = this.getElement(this.selectors.BUTTON);
-        button.addEventListener('click', this._clickToggler.bind(this));
+        this.addEventListener(button, 'click', this._clickToggler);
     }
 
     /**

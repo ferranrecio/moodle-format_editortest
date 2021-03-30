@@ -14,9 +14,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Example of using subcomponents.
+ * Test component example.
  *
- * @module     format_editortest/local/examples/stateready
+ * @module     format_editortest/local/examples/remove
  * @package    core_course
  * @copyright  2020 Ferran Recio <ferran@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +24,7 @@
 
 import {BaseComponent} from 'core/reactive';
 import courseeditor from 'core_course/courseeditor';
-import Renamer from 'format_editortest/local/examples/renamer';
-import log from 'core/log';
+
 
 export default class Component extends BaseComponent {
 
@@ -34,11 +33,11 @@ export default class Component extends BaseComponent {
      */
     create() {
         // Optional component name for debugging.
-        this.name = 'watcher';
+        this.name = 'remove';
         // Default query selectors.
         this.selectors = {
             CONTENT: `[data-for='content']`,
-            RENAMER: `[data-for='renamer']`,
+            BUTTON: `[data-for='toggler']`,
         };
     }
 
@@ -65,45 +64,52 @@ export default class Component extends BaseComponent {
      *
      * @param {object} state the initial state
      */
-    async stateReady(state) {
-        // Update the value.
-        const content = this.getElement(this.selectors.CONTENT);
-        content.innerHTML = state.course.samplestring2;
+    stateReady() {
+        this.subcomponent = undefined;
 
-        // Render the subcomponent passing the input value as data.
+        // Just bind a click listener to the component button.
+        const button = this.getElement(this.selectors.BUTTON);
+        this.addEventListener(button, 'click', this._clickToggler);
+        button.innerHTML = 'Create component';
+    }
+
+    /**
+     * Event click listener for the toggler button.
+     */
+    _clickToggler() {
+
+        if (this.subcomponent === undefined) {
+            // Create a new displayer component.
+            this._createSubcomponent();
+            this.getElement(this.selectors.BUTTON).innerHTML = 'Remove component';
+        } else {
+            // Remove the current displayer component.
+            this._removeSubcomponent();
+            this.getElement(this.selectors.BUTTON).innerHTML = 'Create component';
+        }
+    }
+
+    /**
+     * Render a new subcomponents.
+     */
+    async _createSubcomponent() {
         try {
-            const target = this.getElement(this.selectors.RENAMER);
-            const data = {inputvalue: state.course.samplestring2};
-            this.renderComponent(target, 'format_editortest/local/examples/renamer', data);
+            const target = this.getElement(this.selectors.CONTENT);
+            this.subcomponent = await this.renderComponent(
+                target,
+                'format_editortest/local/examples/remove/displayer',
+                {}
+            );
         } catch (error) {
-            log.error('Cannot load renamer template');
             throw error;
         }
-
-        // Capture subcomponent custom events. We can know the events names from the static getEvents
-        // method of the component class.
-        const events = Renamer.getEvents();
-        this.addEventListener(
-            this.element,
-            events.renamed,
-            ({detail}) => {
-                this._changeValue(detail.component.getValue());
-            }
-        );
     }
 
-    getWatchers() {
-        return [
-            {watch: `course.samplestring2:updated`, handler: this._sampleWatcher},
-        ];
-    }
-
-    _changeValue(newvalue) {
-        this.reactive.dispatch('changeCourseValue', 'samplestring2', newvalue);
-    }
-
-    _sampleWatcher({element}) {
-        const target = this.getElement(this.selectors.CONTENT);
-        target.innerHTML = element.samplestring2;
+    /**
+     * Remove the current subcomponent.
+     */
+    _removeSubcomponent() {
+        this.subcomponent.remove();
+        this.subcomponent = undefined;
     }
 }

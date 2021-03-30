@@ -52,3 +52,16 @@ to subcomponents, which will interact with the same HTML and reactive module as 
 parent.</p>
 
 {{> format_editortest/local/examples/subcomponents}}
+
+<h2>remove and unregister components</h2>
+<p>It is important to differentiate between:</p>
+<ul>
+    <li>Unregister a component: ask the reactive module to remove all state watchers from
+    a component instance. This option does not alter the page HTML.</li>
+    <li>Remove a component: this option not only unregister a component instance but also
+    delete the component main element from the page.</li>
+</ul>
+<p>In both cases, the component can implement extra logic implementing the "destroy" hook method.</p>
+
+{{> format_editortest/local/examples/remove}}
+{{> format_editortest/local/examples/unregister}}
