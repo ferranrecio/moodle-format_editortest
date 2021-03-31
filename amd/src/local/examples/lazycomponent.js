@@ -74,7 +74,7 @@ export default class Component extends BaseComponent {
             // Components are regular mustache files with an AMD module. However, if a mustache file
             // initialize a component you can use the renderComponent method to replace an element
             // by a subcomponent. It is important to note that this method should not be used for loading
-            // regular mustache files as it returns a PRomise that will only be resolved if the mustache has
+            // regular mustache files as it returns a Promise that will only be resolved if the mustache has
             // a component.
             const target = this.getElement(this.selectors.CONTENT);
             this.renderComponent(target, 'format_editortest/local/examples/lazycomponent/sample', data);

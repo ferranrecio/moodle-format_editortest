@@ -45,9 +45,9 @@ class Test extends TestBase {
                 // A generic function to alter the state.
                 alter: (statemanager, name, value) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state[name].value = value;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });

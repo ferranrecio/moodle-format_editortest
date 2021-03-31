@@ -123,7 +123,7 @@ class Test extends TestBase {
         this.assertEquals(null, 4, this.statemanager.state.samples.get(4).id);
         this.assertEquals(null, 'second', this.statemanager.state.samples.get(4).name);
 
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         // Add a value.
         this.statemanager.state.samples.set(1, {id: 1, name: 'new'});
@@ -153,7 +153,7 @@ class Test extends TestBase {
             ],
         });
 
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         this.expectException();
         this.statemanager.state.samples.set(key, value);
@@ -200,7 +200,7 @@ class Test extends TestBase {
         this.assertEquals(null, 4, this.statemanager.state.samples.get(4).id);
         this.assertEquals(null, 'second', this.statemanager.state.samples.get(4).name);
 
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         // Add a value.
         this.statemanager.state.samples.add({id: 1, name: 'new'});
@@ -230,7 +230,7 @@ class Test extends TestBase {
             ],
         });
 
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         this.expectException();
         this.statemanager.state.samples.add(value);

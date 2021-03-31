@@ -242,9 +242,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck.value = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });
@@ -479,9 +479,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck.value = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });
@@ -537,9 +537,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck.value = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });
@@ -597,9 +597,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck.value = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });
@@ -615,9 +615,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck2.value = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });
@@ -746,9 +746,9 @@ class Test extends TestBase {
             mutations: {
                 alter: (statemanager, prop, newvalue) => {
                     const state = statemanager.state;
-                    statemanager.setLocked(false);
+                    statemanager.setReadOnly(false);
                     state.tocheck[prop] = newvalue;
-                    statemanager.setLocked(true);
+                    statemanager.setReadOnly(true);
                 },
             },
         });

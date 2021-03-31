@@ -29,28 +29,34 @@ class Mutations extends DefaultMutations {
 
     toggleCourseValue(statemanager, key) {
         let state = statemanager.state;
-        statemanager.setLocked(false);
+        statemanager.setReadOnly(false);
         state.course[key] = !state.course[key];
-        statemanager.setLocked(true);
+        statemanager.setReadOnly(true);
     }
 
     changeCourseValue(statemanager, key, value) {
         let state = statemanager.state;
-        statemanager.setLocked(false);
+        statemanager.setReadOnly(false);
         state.course[key] = value;
-        statemanager.setLocked(true);
+        statemanager.setReadOnly(true);
     }
 
     changeMyFormat(statemanager, key, value) {
         let state = statemanager.state;
-        statemanager.setLocked(false);
-        // Only the first two depth levels of our state are reactive. If any mutation
-        // wants to modify an depper element, must reassign the variable to trigger
-        // the reactive events.
-        const myformat = {...state.course.myformat};
-        myformat[key] = value;
-        state.course.myformat = myformat;
-        statemanager.setLocked(true);
+        statemanager.setReadOnly(false);
+
+        // Only the first depth level of our state are reactive. If any mutation
+        // wants to modify an depper element, must reassign the reactive variable to trigger
+        // the reactive events or manually inform the action to the statemanager using registerStateAction.
+        state.course.myformat[key] = value;
+        statemanager.registerStateAction('course', 'myformat', 'updated', state.course);
+
+        // Another way of having the same result is reassign the state reactive value:
+        // const myformat = {...state.course.myformat};
+        // myformat[key] = value;
+        // state.course.myformat = myformat;
+
+        statemanager.setReadOnly(true);
     }
 }
 

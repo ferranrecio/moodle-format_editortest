@@ -49,6 +49,11 @@ class Test extends TestBase {
         }, this.fakenode);
     }
 
+    tearDown() {
+        // Set state in read mode will tirgger all the state change events.
+        this.statemanager.setReadOnly(true);
+    }
+
     /**
      * Test initial loaded event.
      */
@@ -107,7 +112,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map');
 
@@ -133,7 +138,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map attribute');
 
@@ -158,7 +163,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map array');
 
@@ -187,7 +192,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map');
         const test2 = this.addAssert('List item #1 updated');
@@ -222,7 +227,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map attribute');
         // We are replacing the full list. This is considered a creation.
@@ -262,7 +267,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Check initial has state map array');
 
@@ -291,7 +296,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Add a new attribute to state variable');
@@ -322,7 +327,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Update and existing attribute to state variable');
@@ -353,7 +358,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Delete and existing attribute to state variable');
@@ -387,7 +392,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Add a new attribute to state variable');
@@ -418,7 +423,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Update and existing attribute to state variable');
@@ -450,7 +455,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('State variable general update event');
         const test2 = this.addAssert('Delete and existing attribute to state variable');
@@ -481,7 +486,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
         const test2 = this.addAssert('Add a new value to a map');
@@ -515,7 +520,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
         const test2 = this.addAssert('Update an element from a map');
@@ -551,7 +556,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
         const test2 = this.addAssert('Delete an element form a map');
@@ -588,11 +593,11 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
-        const test2 = this.addAssert('Create an attrribute form an element of a map');
-        const test3 = this.addAssert('Create an attrribute form a specific element of a map');
+        const test2 = this.addAssert('Create an attribute form an element of a map');
+        const test3 = this.addAssert('Create an attribute form a specific element of a map');
 
         let state = this.statemanager.state;
 
@@ -628,11 +633,11 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
-        const test2 = this.addAssert('Update an attrribute form an element of a map');
-        const test3 = this.addAssert('Update an attrribute form an specific element of a map');
+        const test2 = this.addAssert('Update an attribute form an element of a map');
+        const test3 = this.addAssert('Update an attribute form an specific element of a map');
 
         let state = this.statemanager.state;
 
@@ -668,11 +673,11 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('General map update event');
-        const test2 = this.addAssert('Delete an attrribute form an element of a map');
-        const test3 = this.addAssert('Delete an attrribute form an element of a map');
+        const test2 = this.addAssert('Delete an attribute form an element of a map');
+        const test3 = this.addAssert('Delete an attribute form an element of a map');
 
         let state = this.statemanager.state;
 
@@ -709,7 +714,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Assign the same value does not trigger a general event', true);
         const test2 = this.addAssert('Assign same value does not trigger event', true);
@@ -763,7 +768,7 @@ class Test extends TestBase {
         });
 
         // For this test we need an unlocked state.
-        this.statemanager.setLocked(false);
+        this.statemanager.setReadOnly(false);
 
         const test1 = this.addAssert('Assign the same does not trigger a general event2', false);
         const test2 = this.addAssert('Assign same value does not trigger event', false);

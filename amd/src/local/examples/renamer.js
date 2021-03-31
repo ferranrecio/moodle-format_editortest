@@ -77,7 +77,7 @@ export default class Component extends BaseComponent {
 
         // This component will trigger an event. The BaseComponent class has a shortcut to trigger
         // events. We can use this one or create a new one, it's up to you. The important point is that
-        // you use standard JS evenets and trigger them anchoring this.element with bubbling.
+        // you use standard JS events and trigger them anchoring this.element with bubbling.
 
         // In this we want to debounce the listener to prevent unnecessary state mutations.
         const debounceddispatch = debounce(() => {

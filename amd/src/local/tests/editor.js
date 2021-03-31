@@ -161,9 +161,9 @@ class Test extends TestBase {
             alter: (statemanager, name, value) => {
                 this.assertTrue(test3, true);
                 const state = statemanager.state;
-                statemanager.setLocked(false);
+                statemanager.setReadOnly(false);
                 state.course[name] = value;
-                statemanager.setLocked(true);
+                statemanager.setReadOnly(true);
             },
         });
 
@@ -236,9 +236,9 @@ class Test extends TestBase {
             toggleedit: (statemanager) => {
                 this.assertTrue(test3, true);
                 const state = statemanager.state;
-                statemanager.setLocked(false);
+                statemanager.setReadOnly(false);
                 state.course.editmode = !state.course.editmode;
-                statemanager.setLocked(true);
+                statemanager.setReadOnly(true);
             },
         });
 
