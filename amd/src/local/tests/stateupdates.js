@@ -247,7 +247,7 @@ class Test extends TestBase {
                     value: 'Not OK',
                 },
             }],
-            // List updates can only be done on nonexistent values.
+            // List updates can only be done on existenting values.
             nonexistentid: [{
                 name: 'samples',
                 action: 'update',
@@ -256,6 +256,99 @@ class Test extends TestBase {
                     value: 'Not OK',
                 },
             }],
+            // Inexistent update action.
+            wrongaction: [{
+                name: 'samples',
+                action: 'dosomething',
+                fields: {
+                    id: 1,
+                    value: 'Not OK',
+                },
+            }],
+        };
+    }
+
+    /**
+     * Test addUpdateType method.
+     * @param {String} override the override update type.
+     */
+    testAddUpdateTypes(override) {
+
+        const test1 = this.addAssert('Check can override update methods');
+
+        this.statemanager.setInitialState({
+            samples: [
+                {id: 1, value: 'Change me'},
+            ],
+        });
+
+        // Override methods.
+        const method = (statemanager, updatename, fields) => {
+            this.assertTrue(test1, true);
+            this.assertEquals(null, 'samples', updatename);
+            this.assertEquals(null, 'Check', fields.value);
+            this.assertEquals(null, this.statemanager, statemanager);
+        };
+        const overrides = {};
+        overrides[override] = method;
+        this.statemanager.addUpdateTypes(overrides);
+
+        this.statemanager.processUpdates([{
+            action: override,
+            name: 'samples',
+            fields: {
+                id: 1,
+                value: 'Check',
+            },
+        }]);
+    }
+
+    dataProviderTestAddUpdateTypes() {
+        return {
+            overridedefault: 'update',
+            overridenew: 'newtype',
+        };
+    }
+
+    /**
+     * Test processUpdates with function override.
+     *
+     * @param {String} override  the override update type.
+     */
+    testProcessUpdatesOverride(override) {
+
+        const test1 = this.addAssert('Check can override update methods');
+
+        this.statemanager.setInitialState({
+            samples: [
+                {id: 1, value: 'Change me'},
+            ],
+        });
+
+        // Override methods.
+        const method = (statemanager, updatename, fields) => {
+            this.assertTrue(test1, true);
+            this.assertEquals(null, 'samples', updatename);
+            this.assertEquals(null, 'Check', fields.value);
+            this.assertEquals(null, this.statemanager, statemanager);
+        };
+        const overrides = {};
+        overrides[override] = method;
+
+        this.statemanager.processUpdates([{
+            action: override,
+            name: 'samples',
+            fields: {
+                id: 1,
+                value: 'Check',
+            },
+        }], overrides);
+    }
+
+    dataProviderTestProcessUpdatesOverride() {
+        return {
+            overridedefault: 'update',
+            overridenew: 'newtype',
         };
     }
 }

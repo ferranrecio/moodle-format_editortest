@@ -277,7 +277,7 @@ class TestBase {
     }
 
     assertEquals(shortname, expected, reality) {
-        if (expected === reality) {
+        if (expected == reality) {
             this.markTestPass(shortname);
         } else {
             this.markTestFail(shortname, expected, reality);
