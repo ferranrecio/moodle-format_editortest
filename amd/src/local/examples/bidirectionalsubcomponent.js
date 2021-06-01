@@ -87,9 +87,9 @@ export default class Component extends BaseComponent {
             throw error;
         }
 
-        // For bidirectional relations, we can use the getEvents directly form the instance,
+        // For bidirectional relations, we can use the event directly form the instance,
         // instead of using the static method from the abstract class.
-        const events = this.renamer.getEvents();
+        const events = this.renamer.events;
         this.addEventListener(
             this.element,
             events.renamed,

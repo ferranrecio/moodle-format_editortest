@@ -42,13 +42,13 @@ class Test extends TestBase {
         class NewMutations {
 
             constructor(test) {
-                this.internalvalue = 'Internal';
+                this.internalValue = 'Internal';
                 this.test = test;
             }
 
             mutationtest(statemanager, testid) {
                 this.test.assertTrue(testid, true);
-                this.test.assertEquals(null, 'Internal', this.internalvalue);
+                this.test.assertEquals(null, 'Internal', this.internalValue);
             }
         }
 
@@ -212,7 +212,7 @@ class Test extends TestBase {
                 this.test.assertTrue(test2, true);
 
                 // Save current value.
-                this.editing = editor.isEditing();
+                this.editing = editor.isEditing;
 
                 // Trigger state mutation.
                 editor.dispatch('toggleedit');
@@ -223,7 +223,7 @@ class Test extends TestBase {
                     {
                         watch: 'course.editmode:updated',
                         handler: ({element}) => {
-                            this.test.assertEquals(test4, this.editing, editor.isEditing());
+                            this.test.assertEquals(test4, this.editing, editor.isEditing);
                             this.test.assertEquals(null, !this.editing, element.editmode);
                         }
                     },

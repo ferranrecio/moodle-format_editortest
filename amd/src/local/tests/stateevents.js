@@ -808,6 +808,39 @@ class Test extends TestBase {
             objectvalue3: [{some: null, other: 12}, {some: 22, other: 23}],
         };
     }
+
+    /**
+     * Test transaction events.
+     */
+    testTransactionEvents() {
+        this.statemanager.setInitialState({
+            sample: {
+                name: 'other',
+                list: ['yi', 'er', 'san'],
+            },
+        });
+
+        // For this test we need an unlocked state.
+        this.statemanager.setReadOnly(false);
+
+        const test1 = this.addAssert('Check transaction start');
+        const test2 = this.addAssert('Attribute updated');
+        const test3 = this.addAssert('Check transaction end');
+
+        let state = this.statemanager.state;
+
+        // Alter a value
+        this.fakenode.addEventListener('transaction:start', ({detail}) => {
+            this.assertTrue(test1, detail.state.sample.name == 'anewname');
+        });
+        this.fakenode.addEventListener('state.sample:updated', ({detail}) => {
+            this.assertTrue(test2, detail.state.sample.name == 'anewname');
+        });
+        this.fakenode.addEventListener('transaction:end', ({detail}) => {
+            this.assertTrue(test3, detail.state.sample.name == 'anewname');
+        });
+        state.sample = {name: 'anewname', list: ['uno', 'dos', 'tres']};
+    }
 }
 
 export default new Test();

@@ -35,19 +35,19 @@ class Test extends TestBase {
      */
     setUp() {
         // Create a generic reactive module without state.
-        this.eventname = 'reactive_changed';
+        this.eventName = 'reactive_changed';
 
         this.reactive = new Reactive({
             name: 'Test',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             mutations: {
                 // A generic function to alter the state.
-                alter: (statemanager, name, value) => {
-                    const state = statemanager.state;
-                    statemanager.setReadOnly(false);
+                alter: (stateManager, name, value) => {
+                    const state = stateManager.state;
+                    stateManager.setReadOnly(false);
                     state[name].value = value;
-                    statemanager.setReadOnly(true);
+                    stateManager.setReadOnly(true);
                 },
             },
         });
@@ -59,7 +59,7 @@ class Test extends TestBase {
      * @param {*} detail the detail data
      * @param {*} target the element target
      */
-    eventdispatch(detail, target) {
+    eventDispatch(detail, target) {
         if (target === undefined) {
             target = document;
         }
@@ -313,7 +313,7 @@ class Test extends TestBase {
         const test4 = this.addAssert('Custom event triggered', false);
 
         // We don't have a user so we give the component a method to simulate the used action when it is ready.
-        const clicknow = () => {
+        const clickNow = () => {
             this.target.click();
         };
 
@@ -330,9 +330,9 @@ class Test extends TestBase {
             stateReady() {
                 this.test.assertTrue(test2, true);
                 // Bind some user actions.
-                this.addEventListener(this.element, 'click', this._clickevent);
+                this.addEventListener(this.element, 'click', this._clickEvent);
                 // Now we sumilate a user click.
-                clicknow();
+                clickNow();
             }
 
             static init(test, reactive, element) {
@@ -343,7 +343,7 @@ class Test extends TestBase {
                 });
             }
 
-            _clickevent() {
+            _clickEvent() {
                 this.test.assertTrue(test3, true);
                 // Trigger custom event. Typically before this it will be some mutation or extra logic.
                 this.dispatchEvent(this.events.sampleevent, {value: 'Perfect!'});
@@ -356,7 +356,7 @@ class Test extends TestBase {
         const component = Sample.init(this, this.reactive, this.target);
 
         // As a parent component we want to listen the custom event.
-        this.target.addEventListener(component.getEvents().sampleevent, ({detail}) => {
+        this.target.addEventListener(component.events.sampleevent, ({detail}) => {
             this.assertTrue(test4, detail.value == 'Perfect!');
         });
 
@@ -369,12 +369,12 @@ class Test extends TestBase {
     /**
      * Test descriptor exceptions when creating a new component.
      *
-     * @param {boolean} useelement use a valid element
-     * @param {boolean} usereactive use a valid reactive
+     * @param {boolean} useElement use a valid element
+     * @param {boolean} usereActive use a valid reactive
      */
-    testDescriptorExceptions({useelement, usereactive}) {
-        const element = (useelement) ? this.target : undefined;
-        const reactive = (usereactive) ? this.reactive : undefined;
+    testDescriptorExceptions({useElement, usereActive}) {
+        const element = (useElement) ? this.target : undefined;
+        const reactive = (usereActive) ? this.reactive : undefined;
 
         this.expectException();
 
@@ -386,9 +386,9 @@ class Test extends TestBase {
 
     dataProviderTestDescriptorExceptions() {
         return {
-            withoutelement: {useelement: false, usereactive: true},
-            withoutreactive: {useelement: true, usereactive: false},
-            withoutreactiveandelement: {useelement: true, usereactive: false},
+            withoutelement: {useElement: false, usereActive: true},
+            withoutreactive: {useElement: true, usereActive: false},
+            withoutreactiveandelement: {useElement: true, usereActive: false},
         };
     }
 
@@ -417,7 +417,7 @@ class Test extends TestBase {
         const component = Sample.init(this, this.reactive, this.target);
 
         // Check both getEvents returns the same results.
-        this.assertEquals(null, JSON.stringify(Sample.getEvents()), JSON.stringify(component.getEvents()));
+        this.assertEquals(null, JSON.stringify(Sample.getEvents()), JSON.stringify(component.events));
     }
 
     /**
@@ -556,7 +556,7 @@ class Test extends TestBase {
         const test4 = this.addAssert('Custom event captured only if is registered', !triggers);
 
         // We don't have a user so we give the component a method to simulate the used action when it is ready.
-        const clicknow = () => {
+        const clickNow = () => {
             this.assertTrue(test3, true);
             this.target.click();
         };
@@ -583,7 +583,7 @@ class Test extends TestBase {
                     this.removeEventListener(this.element, 'click', this._clickevent);
                 }
                 // Now we sumilate a user click.
-                clicknow();
+                clickNow();
             }
 
             static init(test, reactive, element) {

@@ -82,7 +82,7 @@ export default class Component extends BaseComponent {
      */
     _clickColorToggler() {
         // We get the current state value directly from our reactive.
-        const state = this.reactive.getState();
+        const state = this.reactive.state;
         let color = state.course.myformat.color;
         let colors = state.course.myformat.colors;
 
