@@ -35,12 +35,12 @@ class Test extends TestBase {
      */
     setUp() {
         // Create a generic reactive module without state.
-        this.eventname = 'reactive_changed';
+        this.eventName = 'reactive_changed';
 
         this.reactive = new Reactive({
             name: 'Test',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             mutations: {
                 // A generic function to alter the state.
                 alter: (statemanager, name, value) => {
@@ -59,7 +59,7 @@ class Test extends TestBase {
      * @param {*} detail the detail data
      * @param {*} target the element target
      */
-    eventdispatch(detail, target) {
+    eventDispatch(detail, target) {
         if (target === undefined) {
             target = document;
         }

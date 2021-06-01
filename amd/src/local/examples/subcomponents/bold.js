@@ -82,7 +82,7 @@ export default class Component extends BaseComponent {
      */
     _clickBoldToggler() {
         // We get the current state value directly from our reactive.
-        const state = this.reactive.getState();
+        const state = this.reactive.state;
         let bold = state.course.myformat.bold;
 
         // This is the way a component ask for mutations.
