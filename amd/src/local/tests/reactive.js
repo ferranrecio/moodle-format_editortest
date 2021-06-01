@@ -35,7 +35,7 @@ class Test extends TestBase {
      * Function to prepare test scenario.
      */
     setUp() {
-        this.eventname = 'reactive_changed';
+        this.eventName = 'reactive_changed';
     }
 
     /**
@@ -44,7 +44,7 @@ class Test extends TestBase {
      * @param {*} detail the detail data
      * @param {*} target the element target
      */
-    eventdispatch(detail, target) {
+    eventDispatch(detail, target) {
         if (target === undefined) {
             target = document;
         }
@@ -62,8 +62,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             target: this.target,
             state: {
                 tocheck: {value: 'OK'},
@@ -87,8 +87,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             target: this.target,
             mutations: {},
         });
@@ -110,8 +110,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             target: this.target,
             state: {
                 tocheck: {value: 'OK'},
@@ -133,8 +133,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             target: this.target,
             mutations: {},
         });
@@ -158,8 +158,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -180,8 +180,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             mutations: {},
         });
 
@@ -206,8 +206,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -234,8 +234,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -279,8 +279,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
         });
 
         this.expectException();
@@ -311,8 +311,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -375,8 +375,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -414,8 +414,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -451,14 +451,13 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
         });
         reactive.setInitialState({
             tocheck: {value: 'OK'},
         });
-        const state = reactive.getState();
-        this.assertTrue(test1, state.tocheck.value === 'OK');
+        this.assertTrue(test1, reactive.state.tocheck.value === 'OK');
     }
 
     /**
@@ -471,8 +470,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'OK'},
             },
@@ -532,8 +531,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             mutations: {
                 alter: (statemanager, newvalue) => {
                     const state = statemanager.state;
@@ -588,8 +587,8 @@ class Test extends TestBase {
 
         const reactive1 = new Reactive({
             name: 'TestReactive1',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'reactive1'},
                 tocheck2: {value: 'reactive1'},
@@ -606,8 +605,8 @@ class Test extends TestBase {
 
         const reactive2 = new Reactive({
             name: 'TestReactive2',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value: 'reactive2'},
                 tocheck2: {value: 'reactive2'},
@@ -681,8 +680,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
         });
 
         if (!correct) {
@@ -738,8 +737,8 @@ class Test extends TestBase {
 
         const reactive = new Reactive({
             name: 'TestReactive',
-            eventname: this.eventname,
-            eventdispatch: this.eventdispatch,
+            eventName: this.eventName,
+            eventDispatch: this.eventDispatch,
             state: {
                 tocheck: {value1: 'OK', value2: 'OK'},
             },
