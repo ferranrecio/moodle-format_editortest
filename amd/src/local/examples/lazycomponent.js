@@ -23,7 +23,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import courseeditor from 'core_course/courseeditor';
+import {courseEditor} from 'core_course/courseeditor';
 import log from 'core/log';
 
 
@@ -54,7 +54,7 @@ export default class Component extends BaseComponent {
     static init(target, selectors) {
         return new Component({
             element: document.getElementById(target),
-            reactive: courseeditor,
+            reactive: courseEditor,
             selectors,
         });
     }

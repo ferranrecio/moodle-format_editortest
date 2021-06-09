@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import courseeditor from 'core_course/courseeditor';
+import {courseEditor} from 'core_course/courseeditor';
 import DefaultMutations from 'core_course/local/courseeditor/mutations';
 
 class Mutations extends DefaultMutations {
@@ -61,7 +61,7 @@ class Mutations extends DefaultMutations {
 }
 
 const init = function() {
-    courseeditor.setMutations(new Mutations());
+    courseEditor.setMutations(new Mutations());
 };
 
 export default {init};

@@ -25,7 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import editor from 'core_course/courseeditor';
+import {courseEditor} from 'core_course/courseeditor';
 import {BaseComponent} from 'core/reactive';
 import TestBase from 'format_editortest/local/tests/testbase';
 
@@ -52,7 +52,7 @@ class Test extends TestBase {
             }
         }
 
-        editor.setMutations(new NewMutations(this));
+        courseEditor.setMutations(new NewMutations(this));
     }
 
     /**
@@ -68,7 +68,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: editor,
+                    reactive: courseEditor,
                     element,
                     test,
                 });
@@ -93,7 +93,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: editor,
+                    reactive: courseEditor,
                     element,
                     test,
                 });
@@ -131,7 +131,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: editor,
+                    reactive: courseEditor,
                     element,
                     test,
                 });
@@ -157,7 +157,7 @@ class Test extends TestBase {
         }
 
         // Add some mutations.
-        editor.addMutations({
+        courseEditor.addMutations({
             alter: (statemanager, name, value) => {
                 this.assertTrue(test3, true);
                 const state = statemanager.state;
@@ -177,7 +177,7 @@ class Test extends TestBase {
         const test1 = this.addAssert('Mutation executed', false);
 
         // Editor is a singleton instance, we add the
-        editor.dispatch('mutationtest', test1);
+        courseEditor.dispatch('mutationtest', test1);
     }
 
     /**
@@ -202,7 +202,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: editor,
+                    reactive: courseEditor,
                     element,
                     test,
                 });
@@ -212,10 +212,10 @@ class Test extends TestBase {
                 this.test.assertTrue(test2, true);
 
                 // Save current value.
-                this.editing = editor.isEditing;
+                this.editing = courseEditor.isEditing;
 
                 // Trigger state mutation.
-                editor.dispatch('toggleedit');
+                courseEditor.dispatch('toggleedit');
             }
 
             getWatchers() {
@@ -223,7 +223,7 @@ class Test extends TestBase {
                     {
                         watch: 'course.editmode:updated',
                         handler: ({element}) => {
-                            this.test.assertEquals(test4, this.editing, editor.isEditing);
+                            this.test.assertEquals(test4, this.editing, courseEditor.isEditing);
                             this.test.assertEquals(null, !this.editing, element.editmode);
                         }
                     },
@@ -232,7 +232,7 @@ class Test extends TestBase {
         }
 
         // Add some mutations.
-        editor.addMutations({
+        courseEditor.addMutations({
             toggleedit: (statemanager) => {
                 this.assertTrue(test3, true);
                 const state = statemanager.state;
