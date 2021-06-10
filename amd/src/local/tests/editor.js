@@ -25,7 +25,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 import {BaseComponent} from 'core/reactive';
 import TestBase from 'format_editortest/local/tests/testbase';
 

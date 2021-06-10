@@ -22,13 +22,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace format_editortest\output;
+namespace format_editortest\output\courseformat;
 
-use core_course\output\course_format as course_format_base;
-use renderable;
+use core_courseformat\output\local\content as content_base;
 use stdClass;
+use renderer_base;
 
-class course_format extends course_format_base {
+class content extends content_base {
 
     protected $format;
 
@@ -38,7 +38,7 @@ class course_format extends course_format_base {
      * @param renderer_base $output typically, the renderer that's calling this function
      * @return stdClass data context for a mustache template
      */
-    public function export_for_template(\renderer_base $output): stdClass {
+    public function export_for_template(renderer_base $output): stdClass {
 
         $data = parent::export_for_template($output);
 

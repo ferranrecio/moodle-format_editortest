@@ -25,7 +25,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 
 
 export default class Component extends BaseComponent {

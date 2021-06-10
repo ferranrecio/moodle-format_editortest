@@ -36,7 +36,7 @@ use core\output\inplace_editable;
  * @copyright  2012 Marina Glancy
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_editortest extends core_course\course_format {
+class format_editortest extends core_courseformat\base {
 
     /**
      * Returns true if this course format uses sections.

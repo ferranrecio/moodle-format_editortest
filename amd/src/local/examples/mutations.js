@@ -23,7 +23,7 @@
  */
 
 import watcher from 'format_editortest/local/examples/watcher';
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 
 /**
  * Instead of creating a full component, in this case we can extend watcher

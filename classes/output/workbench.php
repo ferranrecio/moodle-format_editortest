@@ -24,7 +24,7 @@
 
 namespace format_editortest\output;
 
-use core_course\course_format;
+use core_courseformat\base as course_format;
 use renderable;
 use templatable;
 use stdClass;

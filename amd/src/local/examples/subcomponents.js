@@ -23,7 +23,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 import Bold from 'format_editortest/local/examples/subcomponents/bold';
 import Color from 'format_editortest/local/examples/subcomponents/color';
 

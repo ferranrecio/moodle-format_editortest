@@ -64,7 +64,7 @@ switch ($display) {
         if (!empty($displaysection)) {
             $format->set_section_number($displaysection);
         }
-        $outputclass = $format->get_output_classname('course_format');
+        $outputclass = $format->get_output_classname('content');
         $widget = new $outputclass($format);
 }
 

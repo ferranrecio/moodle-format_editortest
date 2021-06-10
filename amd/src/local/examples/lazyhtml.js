@@ -23,7 +23,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 import Templates from 'core/templates';
 import log from 'core/log';
 

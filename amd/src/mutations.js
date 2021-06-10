@@ -22,8 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import {courseEditor} from 'core_course/courseeditor';
-import DefaultMutations from 'core_course/local/courseeditor/mutations';
+import {courseEditor} from 'core_courseformat/courseeditor';
+import DefaultMutations from 'core_courseformat/local/courseeditor/mutations';
 
 class Mutations extends DefaultMutations {
 

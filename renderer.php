@@ -26,15 +26,17 @@
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/format/renderer.php');
 
+use core_courseformat\output\section_renderer;
+
 /**
  * Basic renderer for topics format.
  *
  * @copyright 2012 Dan Poltawski
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class format_editortest_renderer extends format_section_renderer_base {
+class format_editortest_renderer extends section_renderer {
 
-    public function render_course_format(renderable $widget) {
+    public function render_content(renderable $widget) {
         // Include the main tests template.
         $data = $widget->export_for_template($this);
         return $this->render_from_template('format_editortest/course_format', $data);

@@ -23,7 +23,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_course/courseeditor';
+import {courseEditor} from 'core_courseformat/courseeditor';
 import log from 'core/log';
 
 export default class Component extends BaseComponent {
