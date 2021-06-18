@@ -25,9 +25,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import {courseEditor} from 'core_courseformat/courseeditor';
+import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import {BaseComponent} from 'core/reactive';
 import TestBase from 'format_editortest/local/tests/testbase';
+
+const courseEditor = getCurrentCourseEditor();
 
 class Test extends TestBase {
 
@@ -68,7 +70,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: courseEditor,
+                    reactive: getCurrentCourseEditor(),
                     element,
                     test,
                 });
@@ -93,7 +95,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: courseEditor,
+                    reactive: getCurrentCourseEditor(),
                     element,
                     test,
                 });
@@ -131,7 +133,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: courseEditor,
+                    reactive: getCurrentCourseEditor(),
                     element,
                     test,
                 });
@@ -202,7 +204,7 @@ class Test extends TestBase {
 
             static init(test, element) {
                 return new Sample({
-                    reactive: courseEditor,
+                    reactive: getCurrentCourseEditor(),
                     element,
                     test,
                 });

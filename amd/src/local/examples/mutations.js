@@ -23,7 +23,7 @@
  */
 
 import watcher from 'format_editortest/local/examples/watcher';
-import {courseEditor} from 'core_courseformat/courseeditor';
+import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 
 /**
  * Instead of creating a full component, in this case we can extend watcher
@@ -57,7 +57,7 @@ export default class Component extends watcher {
     static init(target, selectors) {
         return new Component({
             element: document.getElementById(target),
-            reactive: courseEditor,
+            reactive: getCurrentCourseEditor(),
             selectors,
         });
     }

@@ -23,7 +23,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_courseformat/courseeditor';
+import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import Bold from 'format_editortest/local/examples/subcomponents/bold';
 import Color from 'format_editortest/local/examples/subcomponents/color';
 
@@ -56,7 +56,7 @@ export default class Component extends BaseComponent {
     static init(target, selectors) {
         const maincomponent = new Component({
             element: document.getElementById(target),
-            reactive: courseEditor,
+            reactive: getCurrentCourseEditor(),
             selectors,
         });
         // Create sub components using the same descriptor.

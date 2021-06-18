@@ -24,7 +24,7 @@
  */
 
 import {BaseComponent} from 'core/reactive';
-import {courseEditor} from 'core_courseformat/courseeditor';
+import {getCurrentCourseEditor} from 'core_courseformat/courseeditor';
 import {debounce} from 'core/utils';
 
 export default class Component extends BaseComponent {
@@ -60,7 +60,7 @@ export default class Component extends BaseComponent {
     static init(target, selectors) {
         return new Component({
             element: document.getElementById(target),
-            reactive: courseEditor,
+            reactive: getCurrentCourseEditor(),
             selectors,
         });
     }
